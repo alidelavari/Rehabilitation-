@@ -18,10 +18,10 @@ public class ColisionWalls : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        SceneManager.LoadScene("GameOver");
+        //SceneManager.LoadScene("GameOver");
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene("GameOver");
+        //SceneManager.LoadScene("GameOver");
     }
 }
