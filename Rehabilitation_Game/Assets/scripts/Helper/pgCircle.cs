@@ -13,9 +13,8 @@ public class pgCircle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float angle = transform.rotation.eulerAngles.z;
-        if (angle > 180)
-            angle = 0;
-        transform.rotation = Quaternion.Euler(0, 0, angle + 1);
+        float angle = GetComponent<RectTransform>().rotation.z;
+        Debug.Log(angle);
+        GetComponent<RectTransform>().Rotate(new Vector3(0, 0, angle + 1));
     }
 }

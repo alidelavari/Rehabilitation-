@@ -19,12 +19,12 @@ public class PathDraw : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Angle = Arrow.GetComponent<Throw>().Angle;
+        Velocity = Arrow.GetComponent<Throw>().Velocity;
         if (Arrow.GetComponent<Throw>().stratingPoint)
         {
             DrawThePath();
         }
-        Angle = Arrow.GetComponent<Throw>().Angle;
-        Velocity = Arrow.GetComponent<Throw>().Velocity;
     }
     public void DrawThePath()
     {
