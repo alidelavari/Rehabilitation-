@@ -22,6 +22,6 @@ public class PgLabel : MonoBehaviour
     public void SetPos(float x, float number)
     {
         transform.position = new Vector2(x, transform.position.y);
-        num.text = ((int)(number * 100 + .5)).ToString();
+        num.text = ((int)(number * 100 + .5)).ToString() + "%";
     }
 }

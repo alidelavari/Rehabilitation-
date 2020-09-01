@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UPersian.Components;
 
 public class HandMove : MonoBehaviour
 {
     [SerializeField] float Initial_known_equivalent_Angle = 0f;//45degree
     [SerializeField] float degree_equivalent = 0f;
     [SerializeField] float Angle = Mathf.PI / 4;
+    [SerializeField] float angleRange = Mathf.PI / 3;
     [SerializeField] float MaxAngle = 12f;
     [SerializeField] float MinAngle = 0f;
     [SerializeField] float midpoint = 6f;
+    [SerializeField] UPersian.Components.RtlText angleText;
     int HeightsInUnits = 12;
 
     // Start is called before the first frame update
@@ -37,6 +40,7 @@ public class HandMove : MonoBehaviour
     {
         float mouseposition = Input.mousePosition.y / Screen.height * HeightsInUnits;
         mouseposition = Mathf.Clamp(mouseposition, MinAngle, MaxAngle);
-        Angle = (mouseposition - midpoint) / midpoint * Mathf.PI / 4;
+        Angle = (mouseposition - midpoint) / midpoint * angleRange;
+        angleText.text = ((int)(Angle * Mathf.Rad2Deg)).ToString();
     }
 }

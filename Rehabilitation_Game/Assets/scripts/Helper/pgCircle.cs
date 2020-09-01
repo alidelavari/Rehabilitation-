@@ -14,7 +14,6 @@ public class pgCircle : MonoBehaviour
     void Update()
     {
         float angle = GetComponent<RectTransform>().rotation.z;
-        Debug.Log(angle);
         GetComponent<RectTransform>().Rotate(new Vector3(0, 0, angle + 1));
     }
 }

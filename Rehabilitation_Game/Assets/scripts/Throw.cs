@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Throw : MonoBehaviour
 {
+    static bool freeze;
     [SerializeField] float Initial_known_equivalent_Angle = 0f;//45degree
     [SerializeField] float degree_equivalent = 0f;
     [SerializeField] public float Velocity = 20f;
@@ -19,6 +20,12 @@ public class Throw : MonoBehaviour
     public bool stratingPoint = true;
     public bool colision = false;
     Vector2 PositionColision;
+
+    public static void setFreeze(bool val)
+    {
+        freeze = val;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,12 +39,24 @@ public class Throw : MonoBehaviour
         if (stratingPoint)
         {
             set_velocity_angle();
-            LanchOnclick();
+            if (!freeze)
+                LanchOnclick();
         }
         else if(!colision)
         {
             set_arch_inGame_angle_afterThrow();
         }
+
+        /////////////////////////////////////////////////////////
+        DataManager dm = FindObjectOfType<DataManager>();
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            dm.success();           
+        } else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            dm.fail();
+        }
+        /////////////////////////////////////////////////////////
     }
     void set_arch_inGame_angle_afterThrow()
     {
@@ -53,7 +72,7 @@ public class Throw : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             //clear Path
-            FindObjectOfType<CircleManager>().clear_circles();
+            //FindObjectOfType<CircleManager>().clear_circles();
 
 
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
@@ -69,6 +88,12 @@ public class Throw : MonoBehaviour
         //Destroy(GetComponent<Rigidbody2D>());
         Destroy(GetComponent<PolygonCollider2D>());
         colision = true;
+
+        DataManager dm = FindObjectOfType<DataManager>();
+        if (collision.gameObject.name == "Aim")
+            dm.success();
+        else
+            dm.fail();
     }
     public void set_velocity_angle()
     {

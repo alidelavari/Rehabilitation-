@@ -5,6 +5,7 @@ using UnityEngine;
 public class PutArrow : MonoBehaviour
 {
     [SerializeField] GameObject arrowPrefab;
+    [SerializeField] GameObject Path;
     [SerializeField] float waitTime = .5f;
     GameObject arrow;
     float timeAfterThrow;
@@ -19,15 +20,18 @@ public class PutArrow : MonoBehaviour
     {
         if (timeAfterThrow > waitTime)
         {
+            Path.SetActive(true);
             instantiateArrow();
+            timeAfterThrow = 0;
         }
-        if (arrow.GetComponent<Throw>().stratingPoint)
+        if (arrow != null && arrow.GetComponent<Throw>().stratingPoint)
         {
             arrow.transform.position = transform.position;
             arrow.transform.rotation = transform.rotation;
         }
         else
         {
+            Path.SetActive(false);
             timeAfterThrow += Time.deltaTime;
         }
     }
@@ -35,6 +39,5 @@ public class PutArrow : MonoBehaviour
     private void instantiateArrow()
     {
         arrow = Instantiate(arrowPrefab, transform.position, transform.rotation);
-        timeAfterThrow = 0;
     }
 }
