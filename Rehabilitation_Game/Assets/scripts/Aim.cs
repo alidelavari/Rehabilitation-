@@ -43,7 +43,7 @@ public class Aim : MonoBehaviour
         mainPos = pos;
 
 
-        angleText.text = angle.ToString() + " درجه";
+        angleText.text = (angle + 90).ToString() + " درجه";
         //transform.position = pos;
     }
 

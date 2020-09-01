@@ -23,7 +23,7 @@ public class PgBar : MonoBehaviour
     {
         if ((int)(pgTarget*5) - (int)(prePgTarget*5) > 0)
         {
-            FindObjectOfType<CongBox>().show();
+            FindObjectOfType<CongBox>().show((int)(pgTarget*100));
             prePgTarget = pgTarget;
         }
         if (transform.localScale.x - pgTarget < -0.001)

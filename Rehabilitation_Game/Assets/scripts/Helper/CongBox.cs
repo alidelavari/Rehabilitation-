@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CongBox : MonoBehaviour
 {
     [SerializeField] float timeForShow = 2;
+    [SerializeField] GameObject scoreText;
     float timeLast = 0;
     bool showFlag = false;
 
@@ -36,9 +38,10 @@ public class CongBox : MonoBehaviour
         Throw.setFreeze(vis);
     }
 
-    public void show()
+    public void show(int score)
     {
         showFlag = true;
         setVisiblity(true);
+        scoreText.GetComponent<TextMeshProUGUI>().SetText(score.ToString());
     }
 }
