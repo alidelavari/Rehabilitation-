@@ -56,7 +56,7 @@ public class Aim : MonoBehaviour
 
     public void setMoveRange(int movement)
     {
-        movementRange = 0;// Screen.width * movement / 200 / screenWidthInUnit;
+        movementRange = Screen.width * movement / 200 / screenWidthInUnit;
     }
 
     public void setScale(int scale)
