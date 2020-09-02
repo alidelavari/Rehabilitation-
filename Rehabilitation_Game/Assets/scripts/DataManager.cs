@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UPersian;
+using TMPro;
 using System.IO;
 
 public class DataManager : MonoBehaviour
 {
     [SerializeField] Ancher ancher;
     [SerializeField] Aim aim;
-    [SerializeField] UPersian.Components.RtlText levelText;
+    [SerializeField] GameObject levelText;
+    [SerializeField] float waitTime = 1f;
 
     [SerializeField] int possibleFails;
     [SerializeField] int numLevels;
@@ -40,8 +41,8 @@ public class DataManager : MonoBehaviour
 
     public void success()
     {
-        readNextLevel();
-        numberFailed = 0;
+        Throw.setFreeze(true);
+        Invoke("readNextLevel", waitTime);
     }
 
     public void fail()
@@ -49,8 +50,8 @@ public class DataManager : MonoBehaviour
         numberFailed++;
         if (numberFailed >= possibleFails && level > 1)
         {
-            failedLevel();
-            numberFailed = 0;
+            Throw.setFreeze(true);
+            Invoke("failedLevel", waitTime);
         }
 
     }
@@ -73,7 +74,7 @@ public class DataManager : MonoBehaviour
 
     void setLevel(int level)
     {
-        levelText.text = "مرحله\n" + level;
+        levelText.GetComponent<TextMeshProUGUI>().SetText(level.ToString());
     }
 
     void setPB()
@@ -130,6 +131,9 @@ public class DataManager : MonoBehaviour
             aim.setMoveRange(targetMovement);
             aim.setScale(targetScale);
             setPB();
+
+            numberFailed = 0;
+            Throw.setFreeze(false);
         }
 
     }
@@ -179,6 +183,9 @@ public class DataManager : MonoBehaviour
             aim.setMoveRange(targetMovement);
             aim.setScale(targetScale);
             setPB();
+
+            numberFailed = 0;
+            Throw.setFreeze(false);
         }
 
     }

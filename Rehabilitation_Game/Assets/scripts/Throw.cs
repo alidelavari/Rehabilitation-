@@ -15,11 +15,11 @@ public class Throw : MonoBehaviour
     public float Angle =Mathf.PI/4;
     int HeightsInUnits = 12;
     int WidthInUnits = 16;
-    float initial_position_x_circle;
-    Vector2 starting_position;
     public bool stratingPoint = true;
     public bool colision = false;
-    Vector2 PositionColision;
+    GameObject aimObject;
+    Vector3 distanceFromAim;
+    bool collideAim = false;
 
     public static void setFreeze(bool val)
     {
@@ -29,7 +29,6 @@ public class Throw : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        starting_position = new Vector2(transform.position.x, transform.position.y);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
     }
 
@@ -45,6 +44,11 @@ public class Throw : MonoBehaviour
         else if(!colision)
         {
             set_arch_inGame_angle_afterThrow();
+        }
+        else if(collideAim)
+        {
+            //stick to aim
+            gameObject.transform.position = aimObject.transform.position + distanceFromAim;
         }
 
         /////////////////////////////////////////////////////////
@@ -91,7 +95,12 @@ public class Throw : MonoBehaviour
 
         DataManager dm = FindObjectOfType<DataManager>();
         if (collision.gameObject.name == "Aim")
+        {
+            aimObject = collision.gameObject;
+            distanceFromAim = transform.position - aimObject.transform.position;
+            collideAim = true;
             dm.success();
+        }
         else
             dm.fail();
     }
