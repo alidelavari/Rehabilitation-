@@ -108,11 +108,21 @@ public class DataManager : MonoBehaviour
             string[] levelData = new string[5];
             levelData = levelString.Split('_');
             level = int.Parse(levelData[0]);
-            angle = int.Parse(levelData[1]);
-            ancherLocation = int.Parse(levelData[2]);
-            targetLocation = int.Parse(levelData[3]);
-            targetMovement = int.Parse(levelData[4]);
-            targetScale = int.Parse(levelData[5]);
+
+            for(int i = 1; i < levelData.Length; i++)
+            {
+                string data = levelData[i];
+                if (data[0].Equals('A'))
+                    angle = int.Parse(data.Substring(1));
+                else if (data[0].Equals('L'))
+                    ancherLocation = int.Parse(data.Substring(1));
+                else if (data[0].Equals('T'))
+                    targetLocation = int.Parse(data.Substring(1));
+                else if (data[0].Equals('M'))
+                    targetMovement = int.Parse(data.Substring(1));
+                else if (data[0].Equals('S'))
+                    targetScale = int.Parse(data.Substring(1));
+            }
             setLevel(level);
             aim.setAngle(angle);
             ancher.setLocation(ancherLocation);
@@ -140,14 +150,28 @@ public class DataManager : MonoBehaviour
 
         if (levelString != null)
         {
+            //RETURN3
+            //1_A10_L10_T70_M5_S2
+            //2_A15_L10_T70_M0_S1
+            //3_A20_L10_T70_M5_S2
+            //4_A25_L10_T70_M5_S2
             string[] levelData = new string[5];
             levelData = levelString.Split('_');
             level = int.Parse(levelData[0]);
-            angle = int.Parse(levelData[1]);
-            ancherLocation = int.Parse(levelData[2]);
-            targetLocation = int.Parse(levelData[3]);
-            targetMovement = int.Parse(levelData[4]);
-            targetScale = int.Parse(levelData[5]);
+            for (int i = 1; i < levelData.Length; i++)
+            {
+                string data = levelData[i];
+                if (data[0].Equals('A'))
+                    angle = int.Parse(data.Substring(1));
+                else if (data[0].Equals('L'))
+                    ancherLocation = int.Parse(data.Substring(1));
+                else if (data[0].Equals('T'))
+                    targetLocation = int.Parse(data.Substring(1));
+                else if (data[0].Equals('M'))
+                    targetMovement = int.Parse(data.Substring(1));
+                else if (data[0].Equals('S'))
+                    targetScale = int.Parse(data.Substring(1));
+            }
             setLevel(level);
             aim.setAngle(angle);
             ancher.setLocation(ancherLocation);

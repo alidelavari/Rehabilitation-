@@ -13,6 +13,7 @@ public class HandMove : MonoBehaviour
     [SerializeField] float MinAngle = 0f;
     [SerializeField] float midpoint = 6f;
     [SerializeField] UPersian.Components.RtlText angleText;
+    [SerializeField] pgCircle pg_circle;
     int HeightsInUnits = 12;
 
     // Start is called before the first frame update
@@ -42,5 +43,6 @@ public class HandMove : MonoBehaviour
         mouseposition = Mathf.Clamp(mouseposition, MinAngle, MaxAngle);
         Angle = (mouseposition - midpoint) / midpoint * angleRange;
         angleText.text = ((int)(Angle * Mathf.Rad2Deg)).ToString();
+        pg_circle.setAngle((Angle * Mathf.Rad2Deg) + 90);
     }
 }
