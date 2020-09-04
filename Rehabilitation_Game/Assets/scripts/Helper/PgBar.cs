@@ -40,7 +40,7 @@ public class PgBar : MonoBehaviour
         else
             scale -= rate * Time.deltaTime;
         transform.localScale = new Vector2(scale, 1);
-        pgLabel.SetPos(transform.position.x + rectTransform.rect.width * transform.localScale.x, transform.localScale.x);
+        pgLabel.SetPos(-234 + rectTransform.rect.width * transform.localScale.x, transform.localScale.x);
     }
 
     public void setValue(float val)

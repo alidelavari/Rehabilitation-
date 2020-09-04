@@ -8,13 +8,14 @@ public class Throw : MonoBehaviour
     static bool freeze;
     [SerializeField] float Initial_known_equivalent_Angle = 0f;//45degree
     [SerializeField] float degree_equivalent = 0f;
-    [SerializeField] public float Velocity = 20f;
     [SerializeField] float MaxAngle = 12f;
     [SerializeField] float MinAngle = 0f;
     [SerializeField] float midpoint = 6f;
     public float Angle =Mathf.PI/4;
     int HeightsInUnits = 12;
     int WidthInUnits = 16;
+    float velocity = 20f;
+
     public bool stratingPoint = true;
     public bool colision = false;
     GameObject aimObject;
@@ -62,6 +63,11 @@ public class Throw : MonoBehaviour
         }
         /////////////////////////////////////////////////////////
     }
+
+    private void FixedUpdate()
+    {
+        GetComponent<Rigidbody2D>().AddForce(Vector2.down * (FindObjectOfType<Ground>().getGravityAcceleration() + Physics2D.gravity.y));
+    }
     void set_arch_inGame_angle_afterThrow()
     {
         Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
@@ -78,9 +84,10 @@ public class Throw : MonoBehaviour
             //clear Path
             //FindObjectOfType<CircleManager>().clear_circles();
 
-
+            velocity = FindObjectOfType<HandMove>().getVelocity();
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            GetComponent<Rigidbody2D>().velocity = new Vector2(Velocity*Mathf.Cos(Angle), Velocity * Mathf.Sin(Angle));
+            GetComponent<Rigidbody2D>().velocity = new Vector2(velocity*Mathf.Cos(Angle), velocity * Mathf.Sin(Angle));
+            GetComponent<SpriteRenderer>().sortingOrder = 1002;
             stratingPoint = false;
         }
     }

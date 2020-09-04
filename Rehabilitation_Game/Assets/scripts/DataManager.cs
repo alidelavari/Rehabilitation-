@@ -66,7 +66,6 @@ public class DataManager : MonoBehaviour
         {
             numLevels++;
         }
-        Debug.Log(pos);
         dataFile.Position = pos;
         srData.DiscardBufferedData();
         possibleFails = int.Parse(srData.ReadLine());

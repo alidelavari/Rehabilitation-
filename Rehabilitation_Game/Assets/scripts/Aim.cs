@@ -5,11 +5,11 @@ using UnityEngine;
 public class Aim : MonoBehaviour
 {
     [SerializeField] float screenWidthInUnit = 30f;
-    [SerializeField] float screenHeightInUnit = 1.6f;
+    [SerializeField] float screenHeightInUnit = 2f;
     [SerializeField] float movementRange;
     [SerializeField] UPersian.Components.RtlText angleText;
-    [SerializeField] float velocity = 20f;
     Vector3 mainPos;
+    float velocity;
 
     int direction = 1;
     // Start is called before the first frame update
@@ -32,12 +32,13 @@ public class Aim : MonoBehaviour
 
     public void setAngle(int angle)
     {
-        Vector3 initialPos = FindObjectOfType<HandMove>().transform.position;
+        Vector3 initialPos = FindObjectOfType<PutArrow>().transform.position;
         Vector3 pos = transform.position;
         float x = (pos.x - initialPos.x);
         float theta = angle * Mathf.Deg2Rad;
-        float v0 = velocity;
-        pos.y = Physics2D.gravity.y / 2 * Mathf.Pow(x/Mathf.Cos(theta)/v0, 2) + Mathf.Tan(theta) * x;
+        velocity = FindObjectOfType<HandMove>().getVelocity();
+        float g = -FindObjectOfType<Ground>().getGravityAcceleration();
+        pos.y = g / 2 * Mathf.Pow(x/Mathf.Cos(theta)/ velocity, 2) + Mathf.Tan(theta) * x;
         pos.y = pos.y / screenHeightInUnit + initialPos.y;
         transform.position = pos;
         mainPos = pos;

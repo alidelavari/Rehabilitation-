@@ -12,6 +12,7 @@ public class HandMove : MonoBehaviour
     [SerializeField] float MaxAngle = 12f;
     [SerializeField] float MinAngle = 0f;
     [SerializeField] float midpoint = 6f;
+    [SerializeField] float velocity = 20f;
     [SerializeField] UPersian.Components.RtlText angleText;
     [SerializeField] CirclePgHandler pgHandler;
     int HeightsInUnits = 12;
@@ -44,5 +45,14 @@ public class HandMove : MonoBehaviour
         Angle = (mouseposition - midpoint) / midpoint * angleRange;
         angleText.text = ((int)(Angle * Mathf.Rad2Deg) + 90).ToString();
         pgHandler.setAngle((Angle * Mathf.Rad2Deg) + 90);
+    }
+
+    public float getVelocity()
+    {
+        return velocity;
+    }
+    public void setVelocity(float velocity)
+    {
+        this.velocity = velocity;
     }
 }

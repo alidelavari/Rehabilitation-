@@ -20,7 +20,7 @@ public class PathDraw : MonoBehaviour
     void Update()
     {
         Angle = Arrow.GetComponent<Throw>().Angle;
-        Velocity = Arrow.GetComponent<Throw>().Velocity;
+        Velocity = FindObjectOfType<HandMove>().getVelocity();
         if (Arrow.GetComponent<Throw>().stratingPoint)
         {
             DrawThePath();

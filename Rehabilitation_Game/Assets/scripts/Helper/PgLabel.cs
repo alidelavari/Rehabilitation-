@@ -8,9 +8,11 @@ public class PgLabel : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] public RtlText num;
 
+    RectTransform rect;
+
     void Start()
     {
-        
+        rect = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
@@ -21,7 +23,7 @@ public class PgLabel : MonoBehaviour
 
     public void SetPos(float x, float number)
     {
-        transform.position = new Vector2(x, transform.position.y);
+        rect.localPosition = new Vector3(x, rect.localPosition.y, rect.localPosition.z);
         num.text = ((int)(number * 100 + .5)).ToString() + "%";
     }
 }

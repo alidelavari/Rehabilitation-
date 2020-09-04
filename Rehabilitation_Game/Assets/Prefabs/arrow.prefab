@@ -40,9 +40,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6490580009764135274}
   - component: {fileID: 1927353374722051169}
-  - component: {fileID: 847806453016974873}
   - component: {fileID: 5057090865128456121}
   - component: {fileID: 1130042365412037881}
+  - component: {fileID: 8734054577344490488}
   - component: {fileID: 9130894852142213989}
   m_Layer: 0
   m_Name: arrow
@@ -116,27 +116,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &847806453016974873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7008973739787043466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71851010401d5154892824aef23f998b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Initial_known_equivalent_Angle: 0
-  degree_equivalent: 0
-  Velocity: 20
-  MaxAngle: 12
-  MinAngle: 0
-  midpoint: 6
-  Angle: 0.7853982
-  stratingPoint: 1
-  colision: 0
 --- !u!50 &5057090865128456121
 Rigidbody2D:
   serializedVersion: 4
@@ -195,6 +174,27 @@ PolygonCollider2D:
       - {x: 0.53218925, y: -0.10352039}
       - {x: 0.715562, y: -0.0053548813}
       - {x: 0.49402416, y: 0.12056255}
+--- !u!114 &8734054577344490488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008973739787043466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71851010401d5154892824aef23f998b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Initial_known_equivalent_Angle: 0
+  degree_equivalent: 0
+  MaxAngle: 12
+  MinAngle: 0
+  midpoint: 6
+  Angle: 0.7853982
+  Velocity: 20
+  stratingPoint: 1
+  colision: 0
 --- !u!82 &9130894852142213989
 AudioSource:
   m_ObjectHideFlags: 0
