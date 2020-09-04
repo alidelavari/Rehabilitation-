@@ -59,7 +59,7 @@ public class Aim : MonoBehaviour
         movementRange = Screen.width * movement / 200 / screenWidthInUnit;
     }
 
-    public void setScale(int scale)
+    public void setScale(float scale)
     {
         transform.localScale = new Vector3(scale, scale);
     }

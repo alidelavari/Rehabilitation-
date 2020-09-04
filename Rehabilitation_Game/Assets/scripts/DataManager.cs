@@ -8,7 +8,7 @@ public class DataManager : MonoBehaviour
 {
     [SerializeField] Ancher ancher;
     [SerializeField] Aim aim;
-    [SerializeField] GameObject levelText;
+    [SerializeField] UPersian.Components.RtlText levelText;
     [SerializeField] float waitTime = 1f;
 
     [SerializeField] int possibleFails;
@@ -18,7 +18,7 @@ public class DataManager : MonoBehaviour
     [SerializeField] int ancherLocation;
     [SerializeField] int targetLocation;
     [SerializeField] int targetMovement;
-    [SerializeField] int targetScale;
+    [SerializeField] float targetScale;
 
     int numberFailed = 0;
     string dataPath;
@@ -74,7 +74,7 @@ public class DataManager : MonoBehaviour
 
     void setLevel(int level)
     {
-        levelText.GetComponent<TextMeshProUGUI>().SetText(level.ToString());
+        levelText.text = level.ToString();
     }
 
     void setPB()
@@ -122,7 +122,7 @@ public class DataManager : MonoBehaviour
                 else if (data[0].Equals('M'))
                     targetMovement = int.Parse(data.Substring(1));
                 else if (data[0].Equals('S'))
-                    targetScale = int.Parse(data.Substring(1));
+                    targetScale = float.Parse(data.Substring(1));
             }
             setLevel(level);
             aim.setAngle(angle);

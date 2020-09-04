@@ -6,7 +6,7 @@ using TMPro;
 public class CongBox : MonoBehaviour
 {
     [SerializeField] float timeForShow = 2;
-    [SerializeField] GameObject scoreText;
+    [SerializeField] UPersian.Components.RtlText scoreText;
     float timeLast = 0;
     bool showFlag = false;
 
@@ -42,6 +42,6 @@ public class CongBox : MonoBehaviour
     {
         showFlag = true;
         setVisiblity(true);
-        scoreText.GetComponent<TextMeshProUGUI>().SetText(score.ToString());
+        scoreText.text = score.ToString();
     }
 }
