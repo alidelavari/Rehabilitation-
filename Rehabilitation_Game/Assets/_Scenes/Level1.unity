@@ -360,6 +360,7 @@ MonoBehaviour:
   screenWidthInUnit: 100
   screenHeightInUnit: 1.6
   movementRange: 0
+  rate: 1
   angleText: {fileID: 1793813590}
 --- !u!1 &146261297
 GameObject:

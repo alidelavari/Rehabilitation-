@@ -7,6 +7,7 @@ public class Aim : MonoBehaviour
     [SerializeField] float screenWidthInUnit = 30f;
     [SerializeField] float screenHeightInUnit = 2f;
     [SerializeField] float movementRange;
+    [SerializeField] float rate = 1f;
     [SerializeField] UPersian.Components.RtlText angleText;
     Vector3 mainPos;
     float velocity;
@@ -27,7 +28,7 @@ public class Aim : MonoBehaviour
         {
             direction *= -1;
         }
-        transform.Translate(direction * Vector3.up * movementRange * Time.deltaTime);
+        transform.Translate(direction * Vector3.up * rate * Time.deltaTime);
     }
 
     public void setAngle(int angle)
