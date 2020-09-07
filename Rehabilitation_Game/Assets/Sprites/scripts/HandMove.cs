@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UPersian.Components;
@@ -7,7 +8,8 @@ public class HandMove : MonoBehaviour
 {
     [SerializeField] float Initial_known_equivalent_Angle = 0f;//45degree
     [SerializeField] float degree_equivalent = 0f;
-    [SerializeField] float Angle = Mathf.PI / 4;
+    [SerializeField] float mouseAngle = 20;
+    [SerializeField] float serverAngle = 20;
     [SerializeField] float angleRange = Mathf.PI / 2;
     [SerializeField] float MaxAngle = 12f;
     [SerializeField] float MinAngle = 0f;
@@ -15,6 +17,7 @@ public class HandMove : MonoBehaviour
     [SerializeField] float velocity = 20f;
     [SerializeField] UPersian.Components.RtlText angleText;
     [SerializeField] CirclePgHandler pgHandler;
+    [SerializeField] GameHandler gameManager;
     int HeightsInUnits = 12;
 
     // Start is called before the first frame update
@@ -26,25 +29,42 @@ public class HandMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        set_angle();
-        set_arch_inGame_angle();
+        get_angle_by_mouse();
+
+        if (gameManager.IsServerConnected())
+        {
+            set_pg_angle(gameManager.GetServerAngle());
+            set_arch_inGame_angle(gameManager.GetServerAngle());
+        }
+        else
+        {
+            set_pg_angle(mouseAngle);
+            set_arch_inGame_angle(mouseAngle);
+        }
+
+        
     }
 
-    public void set_arch_inGame_angle()
+    public void set_arch_inGame_angle(float currentAngle)
     {
         Vector3 temp = transform.rotation.eulerAngles;
-        temp.z = (Angle * 180 / Mathf.PI) - degree_equivalent + Initial_known_equivalent_Angle;
+        temp.z = ((currentAngle - 90) * Mathf.Deg2Rad * 180 / Mathf.PI) - degree_equivalent + Initial_known_equivalent_Angle;
         transform.rotation = Quaternion.Euler(temp);
 
     }
 
-    public void set_angle()
+    public void get_angle_by_mouse()
     {
         float mouseposition = Input.mousePosition.y / Screen.height * HeightsInUnits;
         mouseposition = Mathf.Clamp(mouseposition, MinAngle, MaxAngle);
-        Angle = (mouseposition - midpoint) / midpoint * angleRange;
-        angleText.text = ((int)(Angle * Mathf.Rad2Deg) + 90).ToString();
-        pgHandler.setAngle((Angle * Mathf.Rad2Deg) + 90);
+        mouseAngle = (((mouseposition - midpoint) / midpoint * angleRange) * Mathf.Rad2Deg) + 90 ;
+        
+    }
+
+    private void set_pg_angle(float currentAngle)
+    {
+        angleText.text = ((int)currentAngle).ToString();
+        pgHandler.setAngle(currentAngle);
     }
 
     public float getVelocity()

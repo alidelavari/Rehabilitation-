@@ -190,9 +190,9 @@ MonoBehaviour:
   degree_equivalent: 0
   MaxAngle: 12
   MinAngle: 0
+  pathAudio: {fileID: 8300000, guid: c5196b82f5a53214788aa548ac8ccd33, type: 3}
   midpoint: 6
   Angle: 0.7853982
-  Velocity: 20
   stratingPoint: 1
   colision: 0
 --- !u!82 &9130894852142213989

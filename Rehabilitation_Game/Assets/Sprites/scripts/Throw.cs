@@ -10,7 +10,9 @@ public class Throw : MonoBehaviour
     [SerializeField] float degree_equivalent = 0f;
     [SerializeField] float MaxAngle = 12f;
     [SerializeField] float MinAngle = 0f;
+    [SerializeField] AudioClip pathAudio;
     [SerializeField] float midpoint = 6f;
+    GameHandler gameHandler;
     public float Angle =Mathf.PI/4;
     int HeightsInUnits = 12;
     int WidthInUnits = 16;
@@ -31,9 +33,10 @@ public class Throw : MonoBehaviour
     void Start()
     {
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        gameHandler = FindObjectOfType<GameHandler>();
     }
 
-    // Update is called once per frame
+    // Update is called once per frameThr
     void Update()
     {
         if (stratingPoint)
@@ -54,7 +57,7 @@ public class Throw : MonoBehaviour
 
         /////////////////////////////////////////////////////////
         DataManager dm = FindObjectOfType<DataManager>();
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return)) 
         {
             dm.success();           
         } else if (Input.GetKeyDown(KeyCode.Escape))
@@ -79,8 +82,11 @@ public class Throw : MonoBehaviour
 
     public void LanchOnclick()
     {
-        if (Input.GetMouseButtonDown(0))
+        bool shot = (gameHandler.IsServerConnected()) ? gameHandler.IsServerShoted() : Input.GetMouseButtonDown(0);
+        if (shot)
         {
+            gameHandler.DisShot();
+            AudioSource.PlayClipAtPoint(pathAudio, Camera.main.transform.position);
             //clear Path
             //FindObjectOfType<CircleManager>().clear_circles();
 
@@ -91,6 +97,7 @@ public class Throw : MonoBehaviour
             stratingPoint = false;
         }
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
@@ -113,9 +120,15 @@ public class Throw : MonoBehaviour
     }
     public void set_velocity_angle()
     {
-        float mouseposition = Input.mousePosition.y / Screen.height * HeightsInUnits;
-        mouseposition= Mathf.Clamp(mouseposition, MinAngle, MaxAngle);
-        Angle = (mouseposition - midpoint) / midpoint * Mathf.PI / 4;
+        if (gameHandler.IsServerConnected()){
+            Angle = (gameHandler.GetServerAngle() - 90) * Mathf.Deg2Rad;
+        }
+        else
+        {
+            float mouseposition = Input.mousePosition.y / Screen.height * HeightsInUnits;
+            mouseposition = Mathf.Clamp(mouseposition, MinAngle, MaxAngle);
+            Angle = (mouseposition - midpoint) / midpoint * Mathf.PI / 4;
+        }
     }
 
 }

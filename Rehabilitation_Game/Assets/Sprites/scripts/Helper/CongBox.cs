@@ -9,6 +9,7 @@ public class CongBox : MonoBehaviour
     [SerializeField] UPersian.Components.RtlText scoreText;
     float timeLast = 0;
     bool showFlag = false;
+    [SerializeField] AudioClip winAudio;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class CongBox : MonoBehaviour
 
     public void show(int score)
     {
+        AudioSource.PlayClipAtPoint(winAudio, Camera.main.transform.position);
         showFlag = true;
         setVisiblity(true);
         scoreText.text = score.ToString();

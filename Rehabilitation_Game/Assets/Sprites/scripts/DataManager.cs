@@ -188,4 +188,10 @@ public class DataManager : MonoBehaviour
         }
 
     }
+
+    public void finishGame()
+    {
+        Debug.Log("finish");
+        Application.Quit();
+    }
 }
