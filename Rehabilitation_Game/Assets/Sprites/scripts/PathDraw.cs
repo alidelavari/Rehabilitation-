@@ -25,7 +25,8 @@ public class PathDraw : MonoBehaviour
             DrawThePath();
         } else
         {
-            //FindObjectOfType<CircleManager>().clear_circles();
+            FindObjectOfType<CircleManager>().clear_circles();
+            Destroy(this.gameObject);
         }
     }
     public void DrawThePath()
