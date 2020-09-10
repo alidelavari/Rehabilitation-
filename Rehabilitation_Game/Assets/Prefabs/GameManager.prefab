@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7928506305975920241}
   - component: {fileID: 281837535}
+  - component: {fileID: 3861165768412561477}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -46,10 +47,26 @@ MonoBehaviour:
   ancher: {fileID: 0}
   aim: {fileID: 0}
   levelText: {fileID: 0}
+  waitTime: 1
   possibleFails: 0
+  numLevels: 0
   level: 0
   angle: 0
   ancherLocation: 0
   targetLocation: 0
   targetMovement: 0
   targetScale: 0
+--- !u!114 &3861165768412561477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3422189780019883528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32dca7cc668fa44b8f3e6b91f05cb01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circlePrefabs: {fileID: 7722686441253995818, guid: d5a27bdcf21628249a75701df8161e8d,
+    type: 3}

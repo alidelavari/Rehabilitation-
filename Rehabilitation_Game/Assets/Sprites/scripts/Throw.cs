@@ -42,6 +42,7 @@ public class Throw : MonoBehaviour
         if (stratingPoint)
         {
             set_velocity_angle();
+
             if (!freeze)
                 LanchOnclick();
         }
