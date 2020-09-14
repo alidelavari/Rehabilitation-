@@ -86,17 +86,22 @@ public class Throw : MonoBehaviour
         bool shot = (gameHandler.IsServerConnected()) ? gameHandler.IsServerShoted() : Input.GetMouseButtonDown(0);
         if (shot)
         {
-            gameHandler.DisShot();
-            AudioSource.PlayClipAtPoint(pathAudio, Camera.main.transform.position);
-            //clear Path
-            //FindObjectOfType<CircleManager>().clear_circles();
-
-            velocity = FindObjectOfType<HandMove>().getVelocity();
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            GetComponent<Rigidbody2D>().velocity = new Vector2(velocity*Mathf.Cos(Angle), velocity * Mathf.Sin(Angle));
-            GetComponent<SpriteRenderer>().sortingOrder = 1002;
-            stratingPoint = false;
+            FindObjectOfType<PredictManager>().Throw();
         }
+    }
+
+    public void throwArrow()
+    {
+        gameHandler.DisShot();
+        AudioSource.PlayClipAtPoint(pathAudio, Camera.main.transform.position);
+        //clear Path
+        //FindObjectOfType<CircleManager>().clear_circles();
+
+        velocity = FindObjectOfType<HandMove>().getVelocity();
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        GetComponent<Rigidbody2D>().velocity = new Vector2(velocity * Mathf.Cos(Angle), velocity * Mathf.Sin(Angle));
+        GetComponent<SpriteRenderer>().sortingOrder = 1002;
+        stratingPoint = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

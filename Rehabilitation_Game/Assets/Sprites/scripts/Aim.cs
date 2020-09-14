@@ -27,7 +27,7 @@ public class Aim : MonoBehaviour
             mainPos.y - pos.y > movementRange)
         {
             direction *= -1;
-        }
+        } 
         transform.Translate(direction * Vector3.up * rate * Time.deltaTime);
     }
 

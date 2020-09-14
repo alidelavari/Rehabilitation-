@@ -19,6 +19,7 @@ public class HandMove : MonoBehaviour
     [SerializeField] CirclePgHandler pgHandler;
     [SerializeField] GameHandler gameManager;
     int HeightsInUnits = 12;
+    float currentAngle;
 
     // Start is called before the first frame update
     void Start()
@@ -33,19 +34,18 @@ public class HandMove : MonoBehaviour
 
         if (gameManager.IsServerConnected())
         {
-            set_pg_angle(gameManager.GetServerAngle());
-            set_arch_inGame_angle(gameManager.GetServerAngle());
+            currentAngle = gameManager.GetServerAngle();
         }
         else
         {
-            set_pg_angle(mouseAngle);
-            set_arch_inGame_angle(mouseAngle);
+            currentAngle = mouseAngle;
         }
 
-        
+        set_pg_angle();
+        set_arch_inGame_angle();
     }
 
-    public void set_arch_inGame_angle(float currentAngle)
+    public void set_arch_inGame_angle()
     {
         Vector3 temp = transform.rotation.eulerAngles;
         temp.z = ((currentAngle - 90) * Mathf.Deg2Rad * 180 / Mathf.PI) - degree_equivalent + Initial_known_equivalent_Angle;
@@ -61,10 +61,15 @@ public class HandMove : MonoBehaviour
         
     }
 
-    private void set_pg_angle(float currentAngle)
+    private void set_pg_angle()
     {
         angleText.text = ((int)currentAngle).ToString();
         pgHandler.setAngle(currentAngle);
+    }
+
+    public float getArrowAngle()
+    {
+        return currentAngle;
     }
 
     public float getVelocity()

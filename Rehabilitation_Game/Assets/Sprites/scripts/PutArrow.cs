@@ -39,5 +39,13 @@ public class PutArrow : MonoBehaviour
     private void instantiateArrow()
     {
         arrow = Instantiate(arrowPrefab, transform.position, transform.rotation);
+        PredictManager pm = GetComponent<PredictManager>();
+        pm.setIdle();
+        pm.setArrow(arrow);
+    }
+
+    public GameObject getArrow()
+    {
+        return arrow;
     }
 }

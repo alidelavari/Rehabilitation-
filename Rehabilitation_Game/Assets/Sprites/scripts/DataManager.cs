@@ -194,4 +194,9 @@ public class DataManager : MonoBehaviour
         Debug.Log("finish");
         Application.Quit();
     }
+
+    public float getTargetAngle()
+    {
+        return angle;
+    }
 }
