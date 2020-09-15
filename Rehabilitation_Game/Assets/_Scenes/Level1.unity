@@ -2417,7 +2417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603385436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.97, y: 1.47, z: -10.275518}
+  m_LocalPosition: {x: 0.97, y: 1.47, z: 0}
   m_LocalScale: {x: 2.123475, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3181,6 +3181,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ancher
+      objectReference: {fileID: 0}
+    - target: {fileID: 1130474695574400053, guid: def52ca3b97464f47b97cab9819784ab,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1130474695574400054, guid: def52ca3b97464f47b97cab9819784ab,
         type: 3}
