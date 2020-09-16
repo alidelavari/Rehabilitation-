@@ -85,7 +85,7 @@ public class PredictManager : MonoBehaviour
 
     States checkArrow()
     {
-        if (Mathf.Abs(FindObjectOfType<HandMove>().getArrowAngle() - FindObjectOfType<DataManager>().getTargetAngle() - 90) <= handMovementRange)
+        if (Mathf.Abs(FindObjectOfType<GameHandler>().GetCurrentAngle() - FindObjectOfType<GameHandler>().getTargetAngle() - 90) <= handMovementRange)
             return States.onAim;
         return States.offAim;
     }

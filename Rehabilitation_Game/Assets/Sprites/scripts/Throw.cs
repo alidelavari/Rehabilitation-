@@ -57,7 +57,7 @@ public class Throw : MonoBehaviour
         }
 
         /////////////////////////////////////////////////////////
-        DataManager dm = FindObjectOfType<DataManager>();
+        GameHandler dm = FindObjectOfType<GameHandler>();
         if (Input.GetKeyDown(KeyCode.Return)) 
         {
             dm.success();           
@@ -113,16 +113,16 @@ public class Throw : MonoBehaviour
         Destroy(GetComponent<PolygonCollider2D>());
         colision = true;
 
-        DataManager dm = FindObjectOfType<DataManager>();
+        GameHandler gm = FindObjectOfType<GameHandler>();
         if (collision.gameObject.name == "Aim")
         {
             aimObject = collision.gameObject;
             distanceFromAim = transform.position - aimObject.transform.position;
             collideAim = true;
-            dm.success();
+            gm.success();
         }
         else
-            dm.fail();
+            gm.fail();
     }
     public void set_velocity_angle()
     {
