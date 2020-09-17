@@ -5,6 +5,7 @@ using UnityEngine;
 public class PathDraw : MonoBehaviour
 {
     [SerializeField] GameObject Arrow;
+    [SerializeField] GameObject Aim;
     [SerializeField] float circleRedius = .1f;
     [SerializeField] float circleXdistance = .3f;
     [SerializeField] int circleNumbers = 20;
@@ -14,7 +15,7 @@ public class PathDraw : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Aim = FindObjectOfType<Aim>().gameObject;
     }
 
     // Update is called once per frame
@@ -33,41 +34,22 @@ public class PathDraw : MonoBehaviour
     {
         FindObjectOfType<CircleManager>().clear_circles();
         float x = transform.position.x;
+        float y;
 
         for (int i=0; i<circleNumbers; i++)
         {
-            float y = calculateHeight(x - Arrow.transform.position.x);
+            y = calculateHeight(x - Arrow.transform.position.x);
             FindObjectOfType<CircleManager>().draw_circle(x, y, circleRedius);
             x += circleXdistance;
+            if (x > Aim.transform.position.x)
+            {
+                break;
+            }
         }
 
-        /*float pathStep = 1f;
-        float Y_positions_circle;
-        float X_positions_circle;
-        float Delta_X_position;
-        float startingRaduis = 2f;
-        float distance = 1f;
-        float initial_Y_Arch = transform.position.y;
-        float X_changable_circule = transform.position.x;
-        //Debug.Log(X_changable_circule);
-        while (X_changable_circule <= max_x_camera / 2 - 1)
-        {
-            X_positions_circle = X_changable_circule;
-            Delta_X_position = X_changable_circule - transform.position.x;
-            Y_positions_circle = -g / (2 * (Mathf.Pow(Mathf.Cos(Angle) * velocity, 2))) * Delta_X_position + Delta_X_position * Mathf.Tan(Angle) + initial_Y_Arch;
-            if (Y_positions_circle > max_y_camera - 1)
-            {
-                break;
-            }
-            if (Y_positions_circle < 1)
-            {
-                break;
-            }
-            FindObjectOfType<CircleManager>().draw_circle(X_positions_circle, Y_positions_circle, startingRaduis);
-            startingRaduis -= 0.3f;
-            X_changable_circule += distance;
-
-        }*/
+        x = Aim.transform.position.x;
+        y = calculateHeight(x - Arrow.transform.position.x);
+        FindObjectOfType<CircleManager>().draw_circle(x, y, circleRedius);
     }
 
     private float calculateHeight(float x)

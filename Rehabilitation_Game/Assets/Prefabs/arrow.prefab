@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Arrow: {fileID: 7008973739787043466}
+  Aim: {fileID: 0}
   circleRedius: 0.7
-  circleXdistance: 0.2
+  circleXdistance: 0.8
   circleNumbers: 100
   max_x_camera: 21.333
   max_y_camera: 12
@@ -149,8 +150,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0.7
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

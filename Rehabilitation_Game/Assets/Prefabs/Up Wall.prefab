@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3972587403108374930}
-  - component: {fileID: 3972587403108374931}
   - component: {fileID: 3972587403108374933}
+  - component: {fileID: 4715229961763498041}
   m_Layer: 0
   m_Name: Up Wall
   m_TagString: Untagged
@@ -32,32 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &3972587403108374931
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3972587403108374928}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 10.1584635, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 21.316927, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &3972587403108374933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,3 +44,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0ed209d5e8275428132c6a00ec5d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!68 &4715229961763498041
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3972587403108374928}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 1.4587917, y: -0.7256937}
+  - {x: 13.414345, y: 3.9497032}
+  - {x: 23.982168, y: -0.81703377}
+  - {x: 24.423063, y: 0.5840931}
+  - {x: 13.129686, y: 6.033739}
+  - {x: 0.91403913, y: 0.5936537}
+  - {x: 1.4693767, y: -0.79986763}

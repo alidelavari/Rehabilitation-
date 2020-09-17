@@ -5,7 +5,6 @@ using UnityEngine;
 public class PutArrow : MonoBehaviour
 {
     [SerializeField] GameObject arrowPrefab;
-    [SerializeField] GameObject Path;
     [SerializeField] float waitTime = .5f;
     GameObject arrow;
     float timeAfterThrow;
@@ -20,7 +19,6 @@ public class PutArrow : MonoBehaviour
     {
         if (timeAfterThrow > waitTime)
         {
-            Path.SetActive(true);
             instantiateArrow();
             timeAfterThrow = 0;
         }
@@ -31,7 +29,6 @@ public class PutArrow : MonoBehaviour
         }
         else
         {
-            Path.SetActive(false);
             timeAfterThrow += Time.deltaTime;
         }
     }

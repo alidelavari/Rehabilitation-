@@ -28,6 +28,7 @@ public class GameHandler : MonoBehaviour
     [SerializeField] DB db;
     [SerializeField] Ancher ancher;
     [SerializeField] Aim aim;
+    [SerializeField] PredictManager predictCircle;
     [SerializeField] UPersian.Components.RtlText levelText;
     [SerializeField] float waitTime = 1f;
 
@@ -38,7 +39,8 @@ public class GameHandler : MonoBehaviour
     [SerializeField] int ancherLocation;
     [SerializeField] int targetLocation;
     [SerializeField] int targetMovement;
-    [SerializeField] float targetScale;
+    [SerializeField] int targetScale;
+    [SerializeField] float consistency;
 
     int numberFailed = 0;
     string dataPath;
@@ -190,38 +192,9 @@ public class GameHandler : MonoBehaviour
                 Destroy(obj.gameObject);
         }
         string levelString = string.Empty;
+        levelString = srData.ReadLine();
 
-        if ((levelString = srData.ReadLine()) != null)
-        {
-            string[] levelData = new string[5];
-            levelData = levelString.Split('_');
-            level = int.Parse(levelData[0]);
-
-            for (int i = 1; i < levelData.Length; i++)
-            {
-                string data = levelData[i];
-                if (data[0].Equals('A'))
-                    targetAngle = int.Parse(data.Substring(1));
-                else if (data[0].Equals('L'))
-                    ancherLocation = int.Parse(data.Substring(1));
-                else if (data[0].Equals('T'))
-                    targetLocation = int.Parse(data.Substring(1));
-                else if (data[0].Equals('M'))
-                    targetMovement = int.Parse(data.Substring(1));
-                else if (data[0].Equals('S'))
-                    targetScale = float.Parse(data.Substring(1));
-            }
-            setLevel(level);
-            aim.setAngle(targetAngle);
-            ancher.setLocation(ancherLocation);
-            aim.setLocation(targetLocation);
-            aim.setMoveRange(targetMovement);
-            aim.setScale(targetScale);
-            setPB();
-
-            numberFailed = 0;
-            Throw.setFreeze(false);
-        }
+        extractData(levelString);
 
     }
 
@@ -239,6 +212,12 @@ public class GameHandler : MonoBehaviour
         for (int i = 1; i <= level; i++)
             levelString = srData.ReadLine();
 
+        extractData(levelString);
+
+    }
+
+    private void extractData(string levelString)
+    {
         if (levelString != null)
         {
             //RETURN3
@@ -253,28 +232,30 @@ public class GameHandler : MonoBehaviour
             {
                 string data = levelData[i];
                 if (data[0].Equals('A'))
-                    targetAngle = int.Parse(data.Substring(1));
+                    targetAngle = int.Parse(data.Substring(1)) - 90;
                 else if (data[0].Equals('L'))
                     ancherLocation = int.Parse(data.Substring(1));
                 else if (data[0].Equals('T'))
                     targetLocation = int.Parse(data.Substring(1));
                 else if (data[0].Equals('M'))
                     targetMovement = int.Parse(data.Substring(1));
-                else if (data[0].Equals('S'))
+                else if (data[0].Equals('E'))
                     targetScale = int.Parse(data.Substring(1));
+                else if (data[0].Equals('C'))
+                    consistency = float.Parse(data.Substring(1));
             }
             setLevel(level);
-            aim.setAngle(targetAngle);
             ancher.setLocation(ancherLocation);
             aim.setLocation(targetLocation);
-            aim.setMoveRange(targetMovement);
+            aim.setAngle(targetAngle);
             aim.setScale(targetScale);
+            aim.setMoveRange(targetMovement);
+            predictCircle.setConsistency(consistency);
             setPB();
 
             numberFailed = 0;
             Throw.setFreeze(false);
         }
-
     }
 
     public void finishGame()

@@ -13,6 +13,12 @@ public class PredictManager : MonoBehaviour
     [SerializeField] float handMovementRange;
     [SerializeField] GameObject aim;
     [SerializeField] TMPro.TextMeshPro timeText;
+
+    States stateCheckedBefore;
+    float timeForCheck;
+    float timeChecked;
+    int numInAim;
+
     enum States { 
         onAim,
         offAim,
@@ -58,7 +64,7 @@ public class PredictManager : MonoBehaviour
                     timeAfterClick = 0;
                 } else {
                     timeAfterClick += Time.deltaTime;
-                    timeText.SetText((timeBeforeThrown - timeAfterClick).ToString("0.##"));
+                    timeText.SetText((timeBeforeThrown - timeAfterClick).ToString("0.#"));
                     if (isMoved())
                     {
                         state = checkArrow();
@@ -85,9 +91,29 @@ public class PredictManager : MonoBehaviour
 
     States checkArrow()
     {
-        if (Mathf.Abs(FindObjectOfType<GameHandler>().GetCurrentAngle() - FindObjectOfType<GameHandler>().getTargetAngle() - 90) <= handMovementRange)
-            return States.onAim;
-        return States.offAim;
+        //if (Mathf.Abs(FindObjectOfType<GameHandler>().GetCurrentAngle() - FindObjectOfType<GameHandler>().getTargetAngle() - 90) <= handMovementRange)
+        if (timeChecked > timeForCheck)
+        {
+            timeChecked = 0;
+            if (numInAim == AimChecker.numInAim)
+            {
+                if (AimChecker.numInAim != 0)
+                    stateCheckedBefore = States.onAim;
+                else
+                    stateCheckedBefore = States.offAim;
+                return stateCheckedBefore;
+            } else
+            {
+                numInAim = AimChecker.numInAim;
+            }
+        }
+        timeChecked += Time.deltaTime;
+        return stateCheckedBefore;
+    }
+
+    public void setConsistency(float t)
+    {
+        timeBeforeThrown = t;
     }
 
     public void Throw()

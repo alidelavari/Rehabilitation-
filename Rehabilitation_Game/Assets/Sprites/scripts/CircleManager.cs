@@ -7,9 +7,7 @@ using UnityEngine;
 
 
 public class CircleManager : MonoBehaviour
-
 {
-
     public GameObject circlePrefabs;
 
 
