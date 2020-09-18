@@ -11,35 +11,39 @@ public class PathDraw : MonoBehaviour
     [SerializeField] int circleNumbers = 20;
     [SerializeField] float max_x_camera = 21.333f;
     [SerializeField] float max_y_camera = 12;
+    CircleManager cm;
 
     // Start is called before the first frame update
     void Start()
     {
         Aim = FindObjectOfType<Aim>().gameObject;
+        cm = FindObjectOfType<CircleManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (Arrow.GetComponent<Throw>().stratingPoint)
         {
             DrawThePath();
         } else
         {
-            FindObjectOfType<CircleManager>().clear_circles();
+            cm.clear_circles();
             Destroy(this.gameObject);
         }
     }
     public void DrawThePath()
     {
-        FindObjectOfType<CircleManager>().clear_circles();
+        cm.clear_circles();
         float x = transform.position.x;
         float y;
 
         for (int i=0; i<circleNumbers; i++)
         {
             y = calculateHeight(x - Arrow.transform.position.x);
-            FindObjectOfType<CircleManager>().draw_circle(x, y, circleRedius);
+            cm.draw_circle(x, y, circleRedius);
+
             x += circleXdistance;
             if (x > Aim.transform.position.x)
             {
@@ -49,7 +53,7 @@ public class PathDraw : MonoBehaviour
 
         x = Aim.transform.position.x;
         y = calculateHeight(x - Arrow.transform.position.x);
-        FindObjectOfType<CircleManager>().draw_circle(x, y, circleRedius);
+        cm.draw_circle(x, y, circleRedius);
     }
 
     private float calculateHeight(float x)
