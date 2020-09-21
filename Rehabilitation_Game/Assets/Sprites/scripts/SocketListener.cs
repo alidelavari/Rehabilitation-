@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,13 +14,11 @@ public class SocketListener : MonoBehaviour
     [SerializeField]
     private Throw Throw;
     bool shotFlag = false;
-    string dataPath;
-
+  
     private bool connected = false;
     // Start is called before the first frame update
     void Start()
     {
-        dataPath = Application.dataPath;
         ConnectToTcpServer();
     }
 
@@ -34,7 +31,7 @@ public class SocketListener : MonoBehaviour
     {
         try
         {
-            if (clientReceiveThread != null)
+            if(clientReceiveThread != null)
                 clientReceiveThread.Abort();
             clientReceiveThread = new Thread(new ThreadStart(ListenForData));
             clientReceiveThread.IsBackground = true;
@@ -52,18 +49,7 @@ public class SocketListener : MonoBehaviour
     {
         try
         {
-            string file = dataPath + "/socketData";
-            FileStream dataFile = File.OpenRead(file);
-            StreamReader srData = new StreamReader(dataFile);
-            dataFile.Position = 0;
-            srData.DiscardBufferedData();
-
-            string host = srData.ReadLine();
-            int port = int.Parse(srData.ReadLine());
-            Debug.Log(host);
-            Debug.Log(port);
-
-            socketConnection = new TcpClient(host, port);
+            socketConnection = new TcpClient("127.0.0.1", 12345);
             Byte[] bytes = new Byte[1024];
             while (true)
             {
@@ -86,10 +72,11 @@ public class SocketListener : MonoBehaviour
                         // Convert byte array to string message. 						
                         string serverMessage = Encoding.ASCII.GetString(incommingData);
                         var yprRegex = new Regex(@"^[0-9]*(?:\.[0-9]*)?\/[0-9]*(?:\.[0-9]*)?\/[0-9]*(?:\.[0-9]*)?\/(0|1)$");
-                        //if (!yprRegex.IsMatch(serverMessage))
-                        //{
-                        //   continue;
-                        //}
+                        if (!yprRegex.IsMatch(serverMessage))
+                        {
+                            Debug.Log(serverMessage);
+                            continue;
+                        }
                         string[] yprs = serverMessage.Split('/');
                         float yaw = float.Parse(yprs[0]);
                         float pitch = float.Parse(yprs[1]);
@@ -97,8 +84,7 @@ public class SocketListener : MonoBehaviour
                         if (shotFlag == true && !yprs[3].Equals("1"))
                             gameManager.Shot();
                         shotFlag = yprs[3].Equals("1");
-                        Debug.Log(pitch);
-                        gameManager.SetServerAngle(pitch);
+                        gameManager.SetServerAngle(yaw);
                     }
                 }
             }

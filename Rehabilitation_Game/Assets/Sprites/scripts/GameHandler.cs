@@ -48,10 +48,10 @@ public class GameHandler : MonoBehaviour
     StreamReader srData;
     private Thread collectingDataThread;
     ArrayList angleDataList = new ArrayList();
-    private int PATIENT_ID;
-    private int SESSION;
+    private int PATIENT_ID = 1;
+    private int SESSION = 1;
     private int GAME_ID = 4;
-
+    
 
     void Start()
     {
@@ -62,17 +62,12 @@ public class GameHandler : MonoBehaviour
         collectingDataThread = new Thread(CollectData);
         collectingDataThread.IsBackground = true;
         collectingDataThread.Start();
-        db.Open();
-        int[] idSession = db.GetUserData();
-        PATIENT_ID = idSession[0];
-        SESSION = idSession[1];
-        db.Close();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
         get_angle_by_mouse();
         HandleMsgBox();
         set_pg_angle();
@@ -80,7 +75,7 @@ public class GameHandler : MonoBehaviour
             currentAngle = serverAngle;
         else
             currentAngle = mouseAngle;
-    }
+    } 
 
     public void HandleMsgBox()
     {
@@ -123,9 +118,9 @@ public class GameHandler : MonoBehaviour
 
     void SaveDataInDb()
     {
-        for (int i = 0; i < angleDataList.Count; i++)
+        for(int i = 0; i < angleDataList.Count; i++)
         {
-            db.SaveAngles(1, 1, 4, (int)((float)angleDataList[i]), (int)((float)angleDataList[i]),
+            db.SaveAngles(1, 1, 4, (int)((float)angleDataList[i]), (int)((float)angleDataList[i]), 
                 (int)((float)angleDataList[i]), 0, 1, 0);
         }
     }
@@ -237,7 +232,7 @@ public class GameHandler : MonoBehaviour
             {
                 string data = levelData[i];
                 if (data[0].Equals('A'))
-                    targetAngle = int.Parse(data.Substring(1));
+                    targetAngle = int.Parse(data.Substring(1)) - 90;
                 else if (data[0].Equals('L'))
                     ancherLocation = int.Parse(data.Substring(1));
                 else if (data[0].Equals('T'))
@@ -252,7 +247,7 @@ public class GameHandler : MonoBehaviour
             setLevel(level);
             ancher.setLocation(ancherLocation);
             aim.setLocation(targetLocation);
-            aim.setAngle(targetAngle - 90);
+            aim.setAngle(targetAngle);
             aim.setScale(targetScale);
             aim.setMoveRange(targetMovement);
             predictCircle.setConsistency(consistency);
@@ -267,6 +262,11 @@ public class GameHandler : MonoBehaviour
     {
         Debug.Log("finish");
         Application.Quit();
+    }
+
+    public float getTargetAngle()
+    {
+        return targetAngle;
     }
 
     private void OnDestroy()

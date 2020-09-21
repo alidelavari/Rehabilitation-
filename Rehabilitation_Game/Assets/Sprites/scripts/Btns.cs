@@ -20,10 +20,7 @@ public class Btns : MonoBehaviour
 
     public void ServerConnect()
     {
-        if (gameHandler.IsServerConnected())
-            gameHandler.DisConnectedFromServer();
-        else
-            gameHandler.ConnectServer();
+        gameHandler.ConnectServer();
     }
 
     public void Quit()

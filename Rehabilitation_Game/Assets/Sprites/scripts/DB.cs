@@ -11,50 +11,34 @@ public class DB : MonoBehaviour
 	IDbConnection dbcon;
 
 	public void Start()
-	{
-
+    {
+		
 	}
 
 	public void Open()
-	{
-		string connection = "URI=file:" + Application.dataPath + "/../../../db/" + "rehabilitation.db";
-		//string connection = "URI=file:" + Application.dataPath + "/rehabilitation.db";
+    {
+		string connection = "URI=file:" + Application.dataPath + "/" + "rehabilitation.db";
 		dbcon = new SqliteConnection(connection);
 		dbcon.Open();
 	}
 
 	public bool IsOpen()
-	{
+    {
 		return dbcon.State == ConnectionState.Open;
-	}
+    }
 
-	public int[] GetUserData()
-	{
-		IDbCommand cmd = dbcon.CreateCommand();
-		cmd.CommandText = $"SELECT id,session FROM patients WHERE is_online = 1";
-		IDataReader reader = cmd.ExecuteReader();
-		int[] idSession = new int[2];
-		while (reader.Read())
-		{
-			idSession[0] = int.Parse(reader[0].ToString());
-			idSession[1] = int.Parse(reader[1].ToString());
-		}
-		return idSession;
-	}
-
-	public void SaveSuccess(int patient_id, int session, int game_id,
+	public void SaveSuccess(int patient_id, int session,int game_id,
 		int target_angle, int yaw_needed, int pitch_needed, int roll_needed)
-	{
-		IDbCommand cmd = dbcon.CreateCommand();
+    {
+		IDbCommand cmd = dbcon.CreateCommand(); 
 		cmd.CommandText = $"INSERT INTO datasets (target_angle,yaw_needed,roll_needed,pitch_needed," +
 			$"patient_id,game_id,session) VALUES ({target_angle},{yaw_needed},{roll_needed}," +
 			$"{pitch_needed},{patient_id}, {game_id},{session})";
 		cmd.ExecuteNonQuery();
 	}
-
 	public void SaveAngles(int patient_id, int session, int game_id,
 		int yaw, int pitch, int roll, int yaw_needed, int pitch_needed, int roll_needed)
-	{
+    {
 		IDbCommand cmd = dbcon.CreateCommand();
 		cmd.CommandText = $"INSERT INTO full_dataset (yaw,pitch,roll,yaw_needed,pitch_needed" +
 			$",roll_needed,patient_id,game_id,session) VALUES ({yaw},{pitch},{roll}," +
@@ -79,8 +63,8 @@ public class DB : MonoBehaviour
 		return levelList;
 	}
 
-	public void BookMarkLevel(int patientId, int levelId)
-	{
+	public void BookMarkLevel(int patientId,int levelId)
+    {
 		IDbCommand cmd2 = dbcon.CreateCommand();
 		cmd2.CommandText = $"UPDATE archer_game_levels SET current = 0 WHERE current = 1";
 		cmd2.ExecuteNonQuery();
@@ -90,18 +74,18 @@ public class DB : MonoBehaviour
 	}
 
 	public void Close()
-	{
+    {
 		dbcon.Close();
 	}
 
 	// Update is called once per frame
 	public void Update()
-	{
+    {
+        
+    }
 
-	}
-
-	internal void SaveAngles(int v1, int v2, int v3, int currentAngle1, float currentAngle2, float currentAngle3, bool v4, bool v5, bool v6)
-	{
-		throw new NotImplementedException();
-	}
+    internal void SaveAngles(int v1, int v2, int v3, int currentAngle1, float currentAngle2, float currentAngle3, bool v4, bool v5, bool v6)
+    {
+        throw new NotImplementedException();
+    }
 }
