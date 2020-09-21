@@ -12,7 +12,7 @@ public class Throw : MonoBehaviour
     [SerializeField] float MinAngle = 0f;
     [SerializeField] AudioClip pathAudio;
     [SerializeField] float midpoint = 6f;
-    GameHandler gameHandler;
+    GameHandler gm;
     public float Angle =Mathf.PI/4;
     int HeightsInUnits = 12;
     int WidthInUnits = 16;
@@ -33,7 +33,7 @@ public class Throw : MonoBehaviour
     void Start()
     {
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-        gameHandler = FindObjectOfType<GameHandler>();
+        gm = FindObjectOfType<GameHandler>();
     }
 
     // Update is called once per frameThr
@@ -57,13 +57,12 @@ public class Throw : MonoBehaviour
         }
 
         /////////////////////////////////////////////////////////
-        GameHandler dm = FindObjectOfType<GameHandler>();
         if (Input.GetKeyDown(KeyCode.Return)) 
         {
-            dm.success();           
+            gm.success();           
         } else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            dm.fail();
+            gm.fail();
         }
         /////////////////////////////////////////////////////////
     }
@@ -83,7 +82,7 @@ public class Throw : MonoBehaviour
 
     public void LanchOnclick()
     {
-        bool shot = (gameHandler.IsServerConnected()) ? gameHandler.IsServerShoted() : Input.GetMouseButtonDown(0);
+        bool shot = (gm.IsServerConnected()) ? gm.IsServerShoted() : Input.GetMouseButtonDown(0);
         if (shot)
         {
             FindObjectOfType<PredictManager>().Throw();
@@ -92,7 +91,7 @@ public class Throw : MonoBehaviour
 
     public void throwArrow()
     {
-        gameHandler.DisShot();
+        gm.DisShot();
         AudioSource.PlayClipAtPoint(pathAudio, Camera.main.transform.position);
         //clear Path
         //FindObjectOfType<CircleManager>().clear_circles();
@@ -113,7 +112,6 @@ public class Throw : MonoBehaviour
         Destroy(GetComponent<PolygonCollider2D>());
         colision = true;
 
-        GameHandler gm = FindObjectOfType<GameHandler>();
         if (collision.gameObject.name == "Aim")
         {
             aimObject = collision.gameObject;
@@ -126,8 +124,8 @@ public class Throw : MonoBehaviour
     }
     public void set_velocity_angle()
     {
-        if (gameHandler.IsServerConnected()){
-            Angle = (gameHandler.GetServerAngle() - 90) * Mathf.Deg2Rad;
+        if (gm.IsServerConnected()){
+            Angle = (gm.GetServerAngle() - 90) * Mathf.Deg2Rad;
         }
         else
         {

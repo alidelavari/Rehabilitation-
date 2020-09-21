@@ -50,8 +50,6 @@ MonoBehaviour:
   circleNumbers: 30
   max_x_camera: 21.333
   max_y_camera: 12
-  circlePrefabs: {fileID: 7722686441253995818, guid: d5a27bdcf21628249a75701df8161e8d,
-    type: 3}
 --- !u!1 &7008973739787043466
 GameObject:
   m_ObjectHideFlags: 0

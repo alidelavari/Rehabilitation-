@@ -18,7 +18,7 @@ public class Aim : MonoBehaviour
     float velocity;
     float g;
     float angle;
-    int platformHeight;
+    float platformHeight;
 
     int direction = 1;
     // Start is called before the first frame update
@@ -48,7 +48,7 @@ public class Aim : MonoBehaviour
 
     public void setAngle(int angle)
     {
-        platformHeight = (int)(5 - 5f  * angle/ 180);
+        platformHeight = (4.2f - 4.2f  * angle/ 180);
         Vector2 initialPos;
         initialPos.x = FindObjectOfType<HandMove>().transform.position.x + arm * Mathf.Cos(angle * Mathf.Deg2Rad);
         initialPos.y = platformHeight + initialY + arm * Mathf.Sin(angle * Mathf.Deg2Rad);
@@ -68,7 +68,7 @@ public class Aim : MonoBehaviour
     public void setLocation(int fromLeft)
     {
         mainPos = transform.position;
-        mainPos.x = Screen.width * fromLeft / 100 / screenWidthInUnit;
+        mainPos.x = 1920 * fromLeft / 100 / screenWidthInUnit + 1;
         transform.position = mainPos;
     }
 
@@ -91,7 +91,8 @@ public class Aim : MonoBehaviour
         initialPos.y = platformHeight + initialY + arm * Mathf.Sin(min);
         x = transform.position.x - initialPos.x;
         float minH = calculateHeight(x, min, initialPos);
-        float scale = Mathf.Clamp(Mathf.Abs(maxH - minH) / heightonScaleOne / 10, 0.5f, 3);
+        float scale = Mathf.Clamp(Mathf.Abs(maxH - minH) / heightonScaleOne, 0.3f, 3);
+        Debug.Log("scale: " + scale.ToString());
         transform.localScale = new Vector3(scale, scale, 1);
     }
     private float calculateHeight(float x, float theta, Vector2 initialPos)

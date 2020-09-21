@@ -20,7 +20,7 @@ public class Ancher : MonoBehaviour
     public void setLocation(int fromLeft)
     {
         Vector3 pos = transform.position;
-        pos.x = Screen.width * fromLeft / 100 / screenWidthInUnit;
+        pos.x = 1920 * fromLeft / 100 / screenWidthInUnit + 1;
         transform.position = pos;
     }
 }

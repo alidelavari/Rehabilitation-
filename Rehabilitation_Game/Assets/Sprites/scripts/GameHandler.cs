@@ -132,12 +132,12 @@ public class GameHandler : MonoBehaviour
 
     public void success()
     {
+        Throw.setFreeze(true);
+        Invoke("readNextLevel", waitTime);
         db.Open();
         db.SaveSuccess(PATIENT_ID, SESSION, GAME_ID, targetAngle, 0, 1, 0);
         db.BookMarkLevel(PATIENT_ID, level);
         db.Close();
-        Throw.setFreeze(true);
-        Invoke("readNextLevel", waitTime);
     }
 
     public void fail()

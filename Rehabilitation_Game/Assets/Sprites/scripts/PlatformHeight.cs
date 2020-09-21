@@ -43,6 +43,7 @@ public class PlatformHeight : MonoBehaviour
 
     public void setHeight(float height)
     {
+        this.height = 0;
         targetHeight = height;
     }
 }
