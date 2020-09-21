@@ -65,7 +65,7 @@ public class PredictManager : MonoBehaviour
                 } else {
                     timeAfterClick += Time.deltaTime;
                     timeText.SetText((timeBeforeThrown - timeAfterClick).ToString("0.#"));
-                    if (isMoved())
+                    if (checkArrow() == States.offAim)
                     {
                         state = checkArrow();
                         timeAfterClick = 0;
