@@ -271,6 +271,7 @@ public class GameHandler : MonoBehaviour
 
     private void OnDestroy()
     {
+        dataFile.Close();
         db.Open();
         SaveDataInDb();
         db.Close();
@@ -339,4 +340,6 @@ public class GameHandler : MonoBehaviour
     {
         Application.Quit();
     }
+
+   
 }
