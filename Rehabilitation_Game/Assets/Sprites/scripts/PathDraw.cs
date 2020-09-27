@@ -6,6 +6,7 @@ public class PathDraw : MonoBehaviour
 {
     [SerializeField] GameObject Arrow;
     [SerializeField] GameObject Aim;
+    [SerializeField] PutArrow putArrow;
     [SerializeField] float circleRedius = .1f;
     [SerializeField] float circleXdistance = .3f;
     [SerializeField] int circleNumbers = 20;
@@ -18,10 +19,11 @@ public class PathDraw : MonoBehaviour
     {
         Aim = FindObjectOfType<Aim>().gameObject;
         cm = FindObjectOfType<CircleManager>();
+        putArrow = FindObjectOfType<PutArrow>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         if (Arrow.GetComponent<Throw>().stratingPoint)
@@ -36,6 +38,37 @@ public class PathDraw : MonoBehaviour
     public void DrawThePath()
     {
         cm.clear_circles();
+
+        Vector3 pos = putArrow.transform.position;
+        float segmentScale = circleXdistance;
+        Vector3 g;
+        if (GameHandler.arrowIsDynamics)
+        {
+            g = Vector3.down * FindObjectOfType<Ground>().getGravityAcceleration();// * 1.1f;
+        }
+        else
+        {
+            g = Vector3.zero;
+        }
+        float theta = Arrow.transform.rotation.z * 2 / 3 * Mathf.PI;
+        float velocity = FindObjectOfType<HandMove>().getVelocity();
+        Vector3 segVelocity = new Vector3(velocity * Mathf.Cos(theta), velocity * Mathf.Sin(theta));
+
+        for (int i = 1; i < circleNumbers; i++)
+        {
+            // Time it takes to traverse one segment of length segScale (careful if velocity is zero)
+            float segTime = (segVelocity.sqrMagnitude != 0) ? segmentScale / segVelocity.magnitude : 0;
+            segVelocity = segVelocity + g * segTime;
+            pos = pos + segVelocity * segTime;
+            cm.draw_circle(pos.x, pos.y, circleRedius);
+            RaycastHit hit;
+            if (Physics.Raycast(pos, transform.forward, out hit))
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                Debug.Log(hit.collider.gameObject.name);
+            }
+        }
+        /*
         float x = transform.position.x;
         float y;
 
@@ -53,7 +86,7 @@ public class PathDraw : MonoBehaviour
 
         x = Aim.transform.position.x;
         y = calculateHeight(x - Arrow.transform.position.x);
-        cm.draw_circle(x, y, circleRedius);
+        cm.draw_circle(x, y, circleRedius);*/
     }
 
     private float calculateHeight(float x)

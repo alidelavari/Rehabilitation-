@@ -92,12 +92,11 @@ public class Aim : MonoBehaviour
         x = transform.position.x - initialPos.x;
         float minH = calculateHeight(x, min, initialPos);
         float scale = Mathf.Clamp(Mathf.Abs(maxH - minH) / heightonScaleOne, 0.3f, 3);
-        Debug.Log("scale: " + scale.ToString());
         transform.localScale = new Vector3(scale, scale, 1);
     }
     private float calculateHeight(float x, float theta, Vector2 initialPos)
     {
-        g = -FindObjectOfType<Ground>().getGravityAcceleration() * 1.13f;
+        g = -FindObjectOfType<Ground>().getGravityAcceleration();
         velocity = FindObjectOfType<HandMove>().getVelocity();
         float initialY = initialPos.y;
         float y;

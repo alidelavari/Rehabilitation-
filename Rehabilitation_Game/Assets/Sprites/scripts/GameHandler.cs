@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
-    static bool isDynamics = false;
+    static bool isDynamics = true;
 
     public static bool arrowIsDynamics
     {

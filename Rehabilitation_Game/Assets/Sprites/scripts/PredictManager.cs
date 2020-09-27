@@ -14,7 +14,7 @@ public class PredictManager : MonoBehaviour
     [SerializeField] GameObject aim;
     [SerializeField] TMPro.TextMeshPro timeText;
 
-    States stateCheckedBefore;
+    //States stateCheckedBefore;
     float timeForCheck;
     float timeChecked;
     int numInAim;
@@ -65,7 +65,7 @@ public class PredictManager : MonoBehaviour
                 } else {
                     timeAfterClick += Time.deltaTime;
                     timeText.SetText((timeBeforeThrown - timeAfterClick).ToString("0.#"));
-                    if (checkArrow() == States.offAim)
+                    if (isMoved())
                     {
                         state = checkArrow();
                         timeAfterClick = 0;
@@ -92,23 +92,32 @@ public class PredictManager : MonoBehaviour
     States checkArrow()
     {
         //if (Mathf.Abs(FindObjectOfType<GameHandler>().GetCurrentAngle() - FindObjectOfType<GameHandler>().getTargetAngle() - 90) <= handMovementRange)
-        if (timeChecked > timeForCheck)
+        //if (timeChecked > timeForCheck)
+        //{
+        //    timeChecked = 0;
+        //    if (numInAim == AimChecker.numInAim)
+        //    {
+        //        if (AimChecker.numInAim != 0)
+        //            stateCheckedBefore = States.onAim;
+        //        else
+        //            stateCheckedBefore = States.offAim;
+        //        return stateCheckedBefore;
+        //    } else
+        //    {
+        //        numInAim = AimChecker.numInAim;
+        //    }
+        //}
+        //timeChecked += Time.deltaTime;
+        //return stateCheckedBefore;
+        States stateChecked;
+        if (AimChecker.numInAim > 0)
         {
-            timeChecked = 0;
-            if (numInAim == AimChecker.numInAim)
-            {
-                if (AimChecker.numInAim != 0)
-                    stateCheckedBefore = States.onAim;
-                else
-                    stateCheckedBefore = States.offAim;
-                return stateCheckedBefore;
-            } else
-            {
-                numInAim = AimChecker.numInAim;
-            }
+            AimChecker.numInAim = 0;
+            stateChecked = States.onAim;
         }
-        timeChecked += Time.deltaTime;
-        return stateCheckedBefore;
+        else
+            stateChecked = States.offAim;
+        return stateChecked;
     }
 
     public void setConsistency(float t)
