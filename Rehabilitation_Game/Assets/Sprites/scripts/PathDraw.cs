@@ -58,12 +58,21 @@ public class PathDraw : MonoBehaviour
 
     private float calculateHeight(float x)
     {
-        float g = -FindObjectOfType<Ground>().getGravityAcceleration() * 1.13f;
+        float y;
+        float g = -FindObjectOfType<Ground>().getGravityAcceleration();// * 1.1f;
         float theta = Arrow.transform.rotation.z * 2 / 3 * Mathf.PI;
         float velocity = FindObjectOfType<HandMove>().getVelocity();
         float initialY = Arrow.transform.position.y;
-        float y = g / 2 * Mathf.Pow(x / Mathf.Cos(theta) / velocity, 2) + Mathf.Tan(theta) * x;
-        y = y / 1.55f + initialY;
+        if (GameHandler.arrowIsDynamics)
+        {
+            y = g / 2 * Mathf.Pow(x / (Mathf.Cos(theta) * velocity), 2);
+            y += Mathf.Tan(theta) * x;
+            y += initialY;
+        } else
+        {
+            y = Mathf.Tan(theta) * x;
+            y += initialY;
+        }
         return y;
     }
 }

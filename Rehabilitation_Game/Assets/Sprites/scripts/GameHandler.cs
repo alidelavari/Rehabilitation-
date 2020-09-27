@@ -7,6 +7,13 @@ using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
+    static bool isDynamics = false;
+
+    public static bool arrowIsDynamics
+    {
+        get { return isDynamics; }
+    }
+
     // Start is called before the first frame update
     bool serverConnected = false;
     private bool serverFlag = true;
@@ -14,10 +21,9 @@ public class GameHandler : MonoBehaviour
     private bool shotedByServer = false;
     [SerializeField] Message messageObj;
     [SerializeField] SocketListener socketListener;
-    [SerializeField] float angleRange = Mathf.PI / 2;
+    [SerializeField] float angleRange = Mathf.PI;
     [SerializeField] float MaxAngle = 12f;
     [SerializeField] float MinAngle = 0f;
-    [SerializeField] float midpoint = 6f;
     [SerializeField] UPersian.Components.RtlText angleText;
     [SerializeField] CirclePgHandler pgHandler;
     int HeightsInUnits = 12;
@@ -102,7 +108,8 @@ public class GameHandler : MonoBehaviour
     {
         float mouseposition = Input.mousePosition.y / Screen.height * HeightsInUnits;
         mouseposition = Mathf.Clamp(mouseposition, MinAngle, MaxAngle);
-        mouseAngle = (((mouseposition - midpoint) / midpoint * angleRange) * Mathf.Rad2Deg) + 90;
+        float midpoint = (MaxAngle - MinAngle) / 2;
+        mouseAngle = (((mouseposition - midpoint) / (MaxAngle - MinAngle) * angleRange) * Mathf.Rad2Deg) + 90;
 
     }
 

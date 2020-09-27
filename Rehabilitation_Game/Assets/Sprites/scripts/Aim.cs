@@ -100,8 +100,18 @@ public class Aim : MonoBehaviour
         g = -FindObjectOfType<Ground>().getGravityAcceleration() * 1.13f;
         velocity = FindObjectOfType<HandMove>().getVelocity();
         float initialY = initialPos.y;
-        float y = g / 2 * Mathf.Pow(x / Mathf.Cos(theta) / velocity, 2) + Mathf.Tan(theta) * x;
-        y = y / screenHeightInUnit + initialY;
+        float y;
+        if (GameHandler.arrowIsDynamics)
+        {
+            y = g / 2 * Mathf.Pow(x / Mathf.Cos(theta) / velocity, 2);
+            y += Mathf.Tan(theta) * x;
+            y += initialY;
+        } 
+        else
+        {
+            y = Mathf.Tan(theta) * x;
+            y += initialY;
+        }
         return y;
     }
 }

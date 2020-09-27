@@ -2182,10 +2182,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageObj: {fileID: 2127249190}
   socketListener: {fileID: 1289872696}
-  angleRange: 1.047198
-  MaxAngle: 12
+  angleRange: 3.12
+  MaxAngle: 14
   MinAngle: 0
-  midpoint: 6
   angleText: {fileID: 844541741}
   pgHandler: {fileID: 1201313612}
   ConnectServerBtn: {fileID: 606359394}
