@@ -15,7 +15,7 @@ public class PredictManager : MonoBehaviour
     [SerializeField] TMPro.TextMeshPro timeText;
 
     States stateCheckedBefore;
-    float timeForCheck;
+    float timeForCheck = 0.1f;
     float timeChecked;
     int numInAim;
 
@@ -65,7 +65,7 @@ public class PredictManager : MonoBehaviour
                 } else {
                     timeAfterClick += Time.deltaTime;
                     timeText.SetText((timeBeforeThrown - timeAfterClick).ToString("0.#"));
-                    if (checkArrow() == States.offAim)
+                    if (isMoved())
                     {
                         state = checkArrow();
                         timeAfterClick = 0;
@@ -95,20 +95,15 @@ public class PredictManager : MonoBehaviour
         if (timeChecked > timeForCheck)
         {
             timeChecked = 0;
-            if (numInAim == AimChecker.numInAim)
-            {
-                if (AimChecker.numInAim != 0)
-                    stateCheckedBefore = States.onAim;
-                else
-                    stateCheckedBefore = States.offAim;
-                return stateCheckedBefore;
-            } else
-            {
-                numInAim = AimChecker.numInAim;
-            }
+            if (AimChecker.numInAim > 0)
+                stateCheckedBefore = States.onAim;
+            else
+                stateCheckedBefore = States.offAim;
+            AimChecker.numInAim = 0;
         }
         timeChecked += Time.deltaTime;
         return stateCheckedBefore;
+        
     }
 
     public void setConsistency(float t)

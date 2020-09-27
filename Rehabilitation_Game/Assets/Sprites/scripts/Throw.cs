@@ -13,7 +13,6 @@ public class Throw : MonoBehaviour
     [SerializeField] AudioClip pathAudio;
     [SerializeField] float midpoint = 6f;
     GameHandler gm;
-    public float Angle =Mathf.PI/4;
     int HeightsInUnits = 12;
     int WidthInUnits = 16;
     float velocity = 20f;
@@ -34,6 +33,8 @@ public class Throw : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         gm = FindObjectOfType<GameHandler>();
+        if (!GameHandler.arrowIsDynamics)
+            GetComponent<Rigidbody2D>().gravityScale = 0;
     }
 
     // Update is called once per frameThr
@@ -41,8 +42,6 @@ public class Throw : MonoBehaviour
     {
         if (stratingPoint)
         {
-            set_velocity_angle();
-
             if (!freeze)
                 LanchOnclick();
         }
@@ -69,7 +68,8 @@ public class Throw : MonoBehaviour
 
     private void FixedUpdate()
     {
-        GetComponent<Rigidbody2D>().AddForce(Vector2.down * (FindObjectOfType<Ground>().getGravityAcceleration() + Physics2D.gravity.y));
+        if (GameHandler.arrowIsDynamics)
+            GetComponent<Rigidbody2D>().AddForce(Vector2.down * (FindObjectOfType<Ground>().getGravityAcceleration() + Physics2D.gravity.y));
     }
     void set_arch_inGame_angle_afterThrow()
     {
@@ -97,6 +97,7 @@ public class Throw : MonoBehaviour
         //FindObjectOfType<CircleManager>().clear_circles();
 
         velocity = FindObjectOfType<HandMove>().getVelocity();
+        float Angle = transform.rotation.z * 2 / 3 * Mathf.PI;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         GetComponent<Rigidbody2D>().velocity = new Vector2(velocity * Mathf.Cos(Angle), velocity * Mathf.Sin(Angle));
         GetComponent<SpriteRenderer>().sortingOrder = 1002;
@@ -121,18 +122,6 @@ public class Throw : MonoBehaviour
         }
         else
             gm.fail();
-    }
-    public void set_velocity_angle()
-    {
-        if (gm.IsServerConnected()){
-            Angle = (gm.GetServerAngle() - 90) * Mathf.Deg2Rad;
-        }
-        else
-        {
-            float mouseposition = Input.mousePosition.y / Screen.height * HeightsInUnits;
-            mouseposition = Mathf.Clamp(mouseposition, MinAngle, MaxAngle);
-            Angle = (mouseposition - midpoint) / midpoint * Mathf.PI / 4;
-        }
     }
 
 }

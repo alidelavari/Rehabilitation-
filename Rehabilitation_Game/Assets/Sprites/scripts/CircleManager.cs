@@ -10,13 +10,15 @@ public class CircleManager : MonoBehaviour
 
     List<GameObject> circles = new List<GameObject>();
 
-    public void draw_circle(float x, float y, float radius = 1)
+    public GameObject draw_circle(float x, float y, float radius = 1)
     {
         GameObject circle = Instantiate(circlePrefabs, new Vector3(x, y, 0), Quaternion.identity);
 
         circle.transform.localScale = new Vector3(radius, radius, 0);
 
         circles.Add(circle);
+
+        return circle;
     }
 
 
