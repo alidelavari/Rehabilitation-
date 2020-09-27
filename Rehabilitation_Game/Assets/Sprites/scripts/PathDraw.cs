@@ -61,11 +61,9 @@ public class PathDraw : MonoBehaviour
             segVelocity = segVelocity + g * segTime;
             pos = pos + segVelocity * segTime;
             cm.draw_circle(pos.x, pos.y, circleRedius);
-            RaycastHit hit;
-            if (Physics.Raycast(pos, transform.forward, out hit))
+            if(pos.x > Aim.transform.position.x)
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                Debug.Log(hit.collider.gameObject.name);
+                break;
             }
         }
         /*

@@ -14,8 +14,8 @@ public class PredictManager : MonoBehaviour
     [SerializeField] GameObject aim;
     [SerializeField] TMPro.TextMeshPro timeText;
 
-    //States stateCheckedBefore;
-    float timeForCheck;
+    States stateCheckedBefore;
+    float timeForCheck = 0.1f;
     float timeChecked;
     int numInAim;
 
@@ -92,32 +92,18 @@ public class PredictManager : MonoBehaviour
     States checkArrow()
     {
         //if (Mathf.Abs(FindObjectOfType<GameHandler>().GetCurrentAngle() - FindObjectOfType<GameHandler>().getTargetAngle() - 90) <= handMovementRange)
-        //if (timeChecked > timeForCheck)
-        //{
-        //    timeChecked = 0;
-        //    if (numInAim == AimChecker.numInAim)
-        //    {
-        //        if (AimChecker.numInAim != 0)
-        //            stateCheckedBefore = States.onAim;
-        //        else
-        //            stateCheckedBefore = States.offAim;
-        //        return stateCheckedBefore;
-        //    } else
-        //    {
-        //        numInAim = AimChecker.numInAim;
-        //    }
-        //}
-        //timeChecked += Time.deltaTime;
-        //return stateCheckedBefore;
-        States stateChecked;
-        if (AimChecker.numInAim > 0)
+        if (timeChecked > timeForCheck)
         {
+            timeChecked = 0;
+            if (AimChecker.numInAim > 0)
+                stateCheckedBefore = States.onAim;
+            else
+                stateCheckedBefore = States.offAim;
             AimChecker.numInAim = 0;
-            stateChecked = States.onAim;
         }
-        else
-            stateChecked = States.offAim;
-        return stateChecked;
+        timeChecked += Time.deltaTime;
+        return stateCheckedBefore;
+        
     }
 
     public void setConsistency(float t)
