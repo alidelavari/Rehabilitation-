@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
-    static bool isDynamics = true;
+    static bool isDynamics =false;
 
     public static bool arrowIsDynamics
     {
@@ -37,6 +38,7 @@ public class GameHandler : MonoBehaviour
     [SerializeField] PredictManager predictCircle;
     [SerializeField] UPersian.Components.RtlText levelText;
     [SerializeField] float waitTime = 1f;
+    [SerializeField] string angleType;
 
     [SerializeField] int possibleFails;
     [SerializeField] int numLevels;
@@ -119,12 +121,20 @@ public class GameHandler : MonoBehaviour
         pgHandler.setAngle(GetCurrentAngle());
     }
 
+    public string getAngleType()
+    {
+        return angleType;
+    }
+
     void CollectData()
     {
         while (true)
         {
-            angleDataList.Add(currentAngle);
-            Thread.Sleep(500);
+            if (IsServerConnected())
+            {
+                angleDataList.Add(currentAngle);
+                Thread.Sleep(500);
+            }
         }
     }
 
@@ -132,7 +142,7 @@ public class GameHandler : MonoBehaviour
     {
         for (int i = 0; i < angleDataList.Count; i++)
         {
-            db.SaveAngles(1, 1, 4, (int)((float)angleDataList[i]), (int)((float)angleDataList[i]),
+            db.SaveAngles(PATIENT_ID, SESSION, GAME_ID, (int)((float)angleDataList[i]), (int)((float)angleDataList[i]),
                 (int)((float)angleDataList[i]), 0, 1, 0);
         }
     }
@@ -170,6 +180,7 @@ public class GameHandler : MonoBehaviour
         }
         dataFile.Position = pos;
         srData.DiscardBufferedData();
+        angleType = srData.ReadLine();
         possibleFails = int.Parse(srData.ReadLine());
     }
 

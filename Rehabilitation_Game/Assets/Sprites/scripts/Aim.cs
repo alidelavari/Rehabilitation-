@@ -48,7 +48,17 @@ public class Aim : MonoBehaviour
 
     public void setAngle(int angle)
     {
-        platformHeight = (4.2f - 4.2f  * angle/ 180);
+        angle += 90;
+        if(angle < 90)
+        {
+            platformHeight = -(3.5f / 90) * (angle) + 5.5f;
+        }
+        else
+        {
+            platformHeight = 0;
+        }
+        angle -= 90;
+
         Vector2 initialPos;
         initialPos.x = FindObjectOfType<HandMove>().transform.position.x + arm * Mathf.Cos(angle * Mathf.Deg2Rad);
         initialPos.y = platformHeight + initialY + arm * Mathf.Sin(angle * Mathf.Deg2Rad);
@@ -92,6 +102,8 @@ public class Aim : MonoBehaviour
         x = transform.position.x - initialPos.x;
         float minH = calculateHeight(x, min, initialPos);
         float scale = Mathf.Clamp(Mathf.Abs(maxH - minH) / heightonScaleOne, 0.3f, 3);
+        if (scale > 2)
+            scale = 2f;
         transform.localScale = new Vector3(scale, scale, 1);
     }
     private float calculateHeight(float x, float theta, Vector2 initialPos)

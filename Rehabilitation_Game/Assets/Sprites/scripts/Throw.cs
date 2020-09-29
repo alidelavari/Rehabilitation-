@@ -85,6 +85,7 @@ public class Throw : MonoBehaviour
         bool shot = (gm.IsServerConnected()) ? gm.IsServerShoted() : Input.GetMouseButtonDown(0);
         if (shot)
         {
+            gm.DisShot();
             FindObjectOfType<PredictManager>().Throw();
         }
     }

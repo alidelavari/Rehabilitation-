@@ -67,6 +67,7 @@ public class PredictManager : MonoBehaviour
                     timeText.SetText((timeBeforeThrown - timeAfterClick).ToString("0.#"));
                     if (isMoved())
                     {
+                        Debug.Log("!!!!");
                         state = checkArrow();
                         timeAfterClick = 0;
                     }
@@ -82,7 +83,7 @@ public class PredictManager : MonoBehaviour
     bool isMoved()
     {
         float theta = transform.rotation.z * 2 / 3 * Mathf.PI * Mathf.Rad2Deg;
-        if (Mathf.Abs(theta - angleWhenClicked) > rangeVibration)
+        if (checkArrow() == States.offAim)
         {
             return true;
         }
@@ -115,6 +116,7 @@ public class PredictManager : MonoBehaviour
     {
         if (state == States.onAim)
         {
+            Debug.Log("on aim");
             state = States.onThrow;
             angleWhenClicked = transform.rotation.z * 2 / 3 * Mathf.PI * Mathf.Rad2Deg;
         }

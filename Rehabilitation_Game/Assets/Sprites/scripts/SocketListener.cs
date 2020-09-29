@@ -95,10 +95,25 @@ public class SocketListener : MonoBehaviour
                         float pitch = float.Parse(yprs[1]);
                         float roll = float.Parse(yprs[2]);
                         if (shotFlag == true && !yprs[3].Equals("1"))
+                        {
                             gameManager.Shot();
+                            shotFlag = false;
+                        }
                         shotFlag = yprs[3].Equals("1");
-                        Debug.Log(pitch);
-                        gameManager.SetServerAngle(pitch);
+                        if (gameManager.getAngleType().Equals("pitch"))
+                        {
+                            gameManager.SetServerAngle(pitch);
+                            Debug.Log(pitch);
+                        }
+                        else if (gameManager.getAngleType().Equals("yaw"))
+                        {
+                            gameManager.SetServerAngle(yaw);
+                        }
+                        else if(gameManager.getAngleType().Equals("roll"))
+                        {
+                            gameManager.SetServerAngle(roll);
+                        }
+                        
                     }
                 }
             }

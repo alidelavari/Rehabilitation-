@@ -11,6 +11,7 @@ public class PlatformHeight : MonoBehaviour
     float ancherHeight;
     Vector3 initialScale;
     float initialHeight;
+    [SerializeField]
     float targetHeight;
     // Start is called before the first frame update
     void Start()
